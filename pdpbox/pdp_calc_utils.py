@@ -43,8 +43,10 @@ def _get_grids(x, num_grid_points, grid_type, percentile_range, grid_range):
         value_grids = np.percentile(x, percentile_grids)
 
         grids_df = pd.DataFrame()
-        grids_df['percentile_grids'] = [round(p, 2) for p in percentile_grids]
-        grids_df['value_grids'] = [round(value, 2) for value in value_grids]
+        #grids_df['percentile_grids'] = [round(p, 2) for p in percentile_grids]
+        grids_df['percentile_grids'] = percentile_grids
+        #grids_df['value_grids'] = [round(value, 2) for value in value_grids]
+        grids_df['value_grids'] = value_grids
         grids_df = grids_df.groupby(['value_grids'], as_index=False).agg(
             {'percentile_grids': lambda v: str(tuple(v)).replace(',)', ')')}).sort_values('value_grids', ascending=True)
 
@@ -54,7 +56,8 @@ def _get_grids(x, num_grid_points, grid_type, percentile_range, grid_range):
             value_grids = np.linspace(np.min(grid_range), np.max(grid_range), num_grid_points)
         else:
             value_grids = np.linspace(np.min(x), np.max(x), num_grid_points)
-            value_grids = [round(value, 2) for value in value_grids]
+            #value_grids = [round(value, 2) for value in value_grids]
+            value_grids = value_grids
 
         return value_grids, []
 
